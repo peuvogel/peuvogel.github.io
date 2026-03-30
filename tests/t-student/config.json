@@ -1,0 +1,29 @@
+{
+  "title": "t de Student",
+  "subtitle": "Comparação simples para saber se a diferença entre dois grupos é real.",
+  "description": "Interface de análise para comparação de médias independentes. Otimizado para formatos tabulares amplos (Wide): unidade;grupo_a;grupo_b;observacao_opcional. Suporte a colagem direta do Excel.",
+  "defaultQuestion": "As médias dos dois grupos são diferentes?",
+  "didacticCards": [
+    {
+      "title": "O que este teste faz",
+      "text": "Compara duas médias e ajuda a escolher entre t pareado para as mesmas unidades e t independente para grupos distintos."
+    },
+    {
+      "title": "Quando usar t de Student",
+      "text": "Use quando há uma variável numérica e você quer comparar dois procedimentos nas mesmas unidades ou dois grupos independentes definidos pelo estudo."
+    },
+    {
+      "title": "Independentes x pareados",
+      "text": "Use t independente para grupos distintos e t pareado quando a mesma unidade aparece nas duas colunas, na mesma ordem."
+    },
+    {
+      "title": "Cuidados antes de interpretar",
+      "text": "Cheque amostra mínima por grupo, possíveis outliers e coerência clínica da diferença, não apenas o p-valor."
+    },
+    {
+      "title": "O que o p-valor não diz sozinho",
+      "text": "O p-valor não informa magnitude nem relevância prática. Sempre leia junto com IC95% e tamanho de efeito."
+    }
+  ],
+  "exampleText": "Grupo A\tGrupo B\n4,8\t6,1\n5,1\t5,8\n4,9\t6,0\n5,0\t5,9\n4,7\t6,2\n5,2\t5,7\n4,6\t6,3"
+}

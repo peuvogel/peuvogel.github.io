@@ -1,0 +1,40 @@
+{
+  "title": "Prais-Winsten",
+  "subtitle": "Descubra se os números estão subindo, descendo ou estáveis ao longo do tempo.",
+  "description": "Avaliação especializada de tendências temporais em indicadores de saúde. O motor estatístico identifica séries crescentes, decrescentes ou estacionárias em dados agregados, aplicando correção automática para autocorrelação de primeira ordem.",
+  "didacticCards": [
+    {
+      "title": "O que o modelo avalia",
+      "text": "Avalia se há tendência temporal no indicador, estimando direção, magnitude e incerteza da mudança ao longo dos pontos observados."
+    },
+    {
+      "title": "Quando usar Prais-Winsten",
+      "text": "Use em séries temporais agregadas (anuais, mensais ou similares) quando observações consecutivas podem estar correlacionadas."
+    },
+    {
+      "title": "Como interpretar a tendência",
+      "text": "Crescente indica aumento ao longo do tempo, decrescente indica queda, e estacionária sugere ausência de mudança consistente."
+    },
+    {
+      "title": "Por que autocorrelação importa",
+      "text": "Ignorar autocorrelação pode subestimar erros-padrão e gerar conclusões excessivamente otimistas sobre significância."
+    },
+    {
+      "title": "Cuidado com séries curtas",
+      "text": "Com poucos pontos, a estimativa fica instável e a análise pode não detectar mudanças pequenas, mesmo quando elas existem."
+    }
+  ],
+  "exampleHeaders": ["Ano", "Internacoes"],
+  "exampleRows": [
+    [2015, "120,4"],
+    [2016, "125,8"],
+    [2017, "130,2"],
+    [2018, "134,9"],
+    [2019, "138,1"],
+    [2020, "142,7"],
+    [2021, "145,5"],
+    [2022, "149,2"],
+    [2023, "153,6"],
+    [2024, "157,1"]
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "title": "Correlação de Pearson / Spearman",
+  "subtitle": "Veja de forma simples se duas coisas estão relacionadas e se caminham juntas.",
+  "description": "Análise avançada de correlação e associação de dados. Explore a força e a direção do relacionamento entre variáveis com suporte para os métodos de Pearson e Spearman, totalmente adaptado a planilhas no padrão brasileiro e dados do DATASUS.",
+  "didacticCards": [
+    {
+      "title": "O que este teste avalia",
+      "text": "Mede se duas variáveis quantitativas variam juntas, indicando direção e magnitude da associação."
+    },
+    {
+      "title": "Quando usar Pearson",
+      "text": "Quando a nuvem de pontos sugere relação aproximadamente linear e sem influência dominante de pontos extremos."
+    },
+    {
+      "title": "Quando usar Spearman",
+      "text": "Quando há assimetria, possível não linearidade monótona ou sensibilidade a outliers na análise linear."
+    },
+    {
+      "title": "O que olhar antes de interpretar",
+      "text": "Verifique a dispersão, o tamanho amostral, a consistência metodológica e a presença de pontos influentes."
+    },
+    {
+      "title": "Erro comum",
+      "text": "Correlação não implica causalidade. Mesmo uma associação forte não prova que uma variável causa a outra."
+    }
+  ],
+  "examples": [
+    {
+      "id": "padrao",
+      "label": "Exemplo no formato padrao",
+      "description": "Base simples no modelo oficial do modulo.",
+      "text": "id;variavel_x;variavel_y;observacao_opcional\nUF1;12,3;45,2;\nUF2;14,1;43,8;\nUF3;10,9;48,0;\nUF4;15,2;42,7;"
+    }
+  ]
+}

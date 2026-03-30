@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bioestatística LACIR</title>
+  <link rel="icon" type="image/png" href="./logo lacir.png" />
+  <meta name="description" content="Plataforma modular de testes estatísticos para pesquisadores e estudantes de medicina — LACIR" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body>
+
+  <!-- ══ LACIR HEADER ══════════════════════════════════ -->
+  <header class="lacir-header">
+    <div class="lacir-header-inner">
+      <!-- Logo -->
+      <a href="/" class="lacir-logo">
+        <div class="lacir-logo-mark" style="background:transparent; border:none; padding:0; display:flex; align-items:center; box-shadow:none;">
+          <img src="./logo lacir.png" alt="Logo LACIR" style="height: 32px; width: auto; object-fit: contain;" />
+        </div>
+        <div class="lacir-logo-text">
+          <span class="lacir-logo-name">LACIR</span>
+          <span class="lacir-logo-sub">Bioestatística</span>
+        </div>
+      </a>
+
+      <!-- Right side -->
+      <div class="lacir-header-right">
+        <a href="http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sih/cnv/niba.def" target="_blank" rel="noopener noreferrer" class="lacir-header-btn">
+          Portal DATASUS <span style="margin-left:4px; font-size:0.8rem; opacity:0.7;">↗</span>
+        </a>
+        <span class="lacir-header-version">v1.0 · Beta</span>
+      </div>
+    </div>
+  </header>
+  <!-- ════════════════════════════════════════════════ -->
+
+  <div class="page-shell">
+    <aside class="sidebar">
+      <div class="sidebar-card brand-card">
+        <div class="brand-badge">LACIR &middot; Pesquisa</div>
+        <h1>Bioestat&iacute;stica LACIR</h1>
+        <p class="brand-text">Calculadora modular para capacita&ccedil;&atilde;o pr&aacute;tica em testes estat&iacute;sticos, com foco em uso did&aacute;tico e aplica&ccedil;&atilde;o em estudos com planilhas.</p>
+      </div>
+
+      <div class="sidebar-card nav-card">
+        <div class="section-kicker">Testes dispon&iacute;veis</div>
+        <nav id="test-nav" class="test-nav">
+          <div class="loading-chip">Carregando testes...</div>
+        </nav>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <section class="hero-card">
+        <div>
+          <div class="hero-kicker">M&oacute;dulo ativo</div>
+          <h2 id="page-title">Selecione um teste</h2>
+          <p id="page-subtitle">Escolha uma op&ccedil;&atilde;o no menu lateral.</p>
+        </div>
+      </section>
+
+      <section id="module-root" class="module-root">
+        <div class="empty-state">
+          <h3>Bem-vindo</h3>
+          <p>Selecione um teste no menu para come&ccedil;ar.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./assets/js/app.js"></script>
+</body>
+</html>

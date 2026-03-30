@@ -1,0 +1,20 @@
+[
+  {
+    "id": "t-student",
+    "title": "t de Student",
+    "subtitle": "Comparação simples para saber se a diferença entre dois grupos é real.",
+    "path": "./tests/t-student/"
+  },
+  {
+    "id": "correlacao",
+    "title": "Correlação de Pearson / Spearman",
+    "subtitle": "Veja de forma simples se duas coisas estão relacionadas e se caminham juntas.",
+    "path": "./tests/correlacao/"
+  },
+  {
+    "id": "prais-winsten",
+    "title": "Prais-Winsten",
+    "subtitle": "Descubra se os números estão subindo, descendo ou estáveis ao longo do tempo.",
+    "path": "./tests/prais-winsten/"
+  }
+]

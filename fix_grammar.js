@@ -1,0 +1,197 @@
+const fs = require('fs');
+const path = require('path');
+
+const replacements = {
+    'Módulo didático • Prais-Winsten': 'Módulo didático • Prais-Winsten',
+    'A interpretacao aparecera aqui apos rodar a analise.': 'A interpretação aparecerá aqui após rodar a análise.',
+    'Rodar analise': 'Rodar análise',
+    'status da analise': 'status da análise',
+    'Revise a previa antes de rodar a analise.': 'Revise a prévia antes de rodar a análise.',
+    'Dados colados lidos. Revise a previa antes de rodar a analise.': 'Dados colados lidos. Revise a prévia antes de rodar a análise.',
+    'Residuo alto nao invalida automaticamente a analise': 'Resíduo alto não invalida automaticamente a análise',
+    'Leia um arquivo compativel ou cole a tabela no formato padrao antes de rodar a analise.': 'Leia um arquivo compatível ou cole a tabela no formato padrão antes de rodar a análise.',
+    'Forneca ao menos 4 pares validos para uma analise mais estavel.': 'Forneça ao menos 4 pares válidos para uma análise mais estável.',
+    'Base derivada do DATASUS enviada para a analise.': 'Base derivada do DATASUS enviada para a análise.',
+    'Analise concluida': 'Análise concluída',
+    'rodar analise': 'rodar análise',
+    'analise concluida': 'análise concluída',
+    'previa da correlacao': 'prévia da correlação',
+    'Correlacao de Pearson': 'Correlação de Pearson',
+    'correlacao de Pearson': 'correlação de Pearson',
+    'correlacao de Spearman': 'correlação de Spearman',
+    'Previa dos dados': 'Prévia dos dados',
+    'previa DATASUS': 'prévia DATASUS',
+    'Nenhum dado lido ainda.': 'Nenhum dado lido ainda.',
+    'Linhas validas': 'Linhas válidas',
+    'Ajuste Manual e Analise': 'Ajuste Manual e Análise',
+    'O Assistente acima sugere o metodo ideal.': 'O Assistente acima sugere o método ideal.',
+    'Interpretacao automatica': 'Interpretação automática',
+    'Visualizacao e pontos influentes': 'Visualização e pontos influentes',
+    'Importacao': 'Importação',
+    'Cabecalho': 'Cabeçalho',
+    'cabecalho': 'cabeçalho',
+    'padrao': 'padrão',
+    'Metodo de correlacao em destaque': 'Método de correlação em destaque',
+    'Variavel X': 'Variável X',
+    'Variavel Y': 'Variável Y',
+    'variavel X': 'variável X',
+    'variavel Y': 'variável Y',
+    'Variaveis Quantitativas': 'Variáveis Quantitativas',
+    'Pelo menos uma Ordinal': 'Pelo menos uma Ordinal',
+    'Forneca os dados': 'Forneça os dados',
+    'Exemplo Pratico': 'Exemplo Prático',
+    'Limpar Area': 'Limpar Área',
+    'graficos': 'gráficos',
+    'previa': 'prévia',
+    'Nao foi possivel': 'Não foi possível',
+    'nao foi possivel': 'não foi possível',
+    'nao ha': 'não há',
+    'Nao ha': 'Não há',
+    'sao os tipos': 'são os tipos',
+    'numericos continuos': 'numéricos contínuos',
+    'classificacao de 1 a 5': 'classificação de 1 a 5',
+    'existe evidencia de normalidade': 'existe evidência de normalidade',
+    'AMBAS as suas variaveis': 'AMBAS as suas variáveis',
+    'SIM, existe evidencia': 'SIM, existe evidência',
+    'Confirmo que a distribuicao aparenta ser normal estatistica ou visualmente': 'Confirmo que a distribuição aparenta ser normal estatística ou visualmente',
+    'NAO, nao ha evidencia': 'NÃO, não há evidência',
+    'Sei que nao sao normais': 'Sei que não são normais',
+    'Este e um teste parametrico': 'Este é um teste paramétrico',
+    'relacao LINEAR': 'relação LINEAR',
+    'variaveis quantitativas': 'variáveis quantitativas',
+    'DISTRIBUICAO NORMAL': 'DISTRIBUIÇÃO NORMAL',
+    'Ele nao e ideal': 'Ele não é ideal',
+    'Este e um teste nao-parametrico': 'Este é um teste não-paramétrico',
+    'relacao MONOTONA': 'relação MONÓTONA',
+    'Correlacao': 'Correlação',
+    'correlacao': 'correlação',
+    'Pares validos': 'Pares válidos',
+    'pares validos': 'pares válidos',
+    'Atencao a possiveis outliers': 'Atenção a possíveis outliers',
+    'sensivel a pontos extremos': 'sensível a pontos extremos',
+    'Dispersao com reta de tendencia': 'Dispersão com reta de tendência',
+    'tendencia': 'tendência',
+    'Tendencia': 'Tendência',
+    'A reta e mostrada': 'A reta é mostrada',
+    'Cenario': 'Cenário',
+    'cenario': 'cenário',
+    'Importar arquivo(s)': 'Importar arquivo(s)',
+    'Confirmar a linha de cabecalho': 'Confirmar a linha de cabeçalho',
+    'Diagnostico automatico': 'Diagnóstico automático',
+    'Conteudo': 'Conteúdo',
+    'conteudo': 'conteúdo',
+    'numeros com virgula decimal': 'números com vírgula decimal',
+    'tabulacao do Excel': 'tabulação do Excel',
+    'opcao avancada': 'opção avançada',
+    'Mapear os papeis das colunas': 'Mapear os papéis das colunas',
+    'Pre-visualizar': 'Pré-visualizar',
+    'Normalizacao incompleta': 'Normalização incompleta',
+    'Opcional': 'Opcional',
+    'opcional': 'opcional',
+    'Area de colagem': 'Área de colagem',
+    'modulo didatico': 'Módulo didático',
+    'Modulo didatico': 'Módulo didático',
+    'Cole a tabela do DATASUS aqui': 'Cole a tabela do DATASUS aqui',
+    'celulas no TabNet': 'células no TabNet',
+    'Lendo tabela DATASUS colada...': 'Lendo tabela DATASUS colada...',
+    'Tabela DATASUS lida com sucesso': 'Tabela DATASUS lida com sucesso',
+    'Cole seus dados aqui': 'Cole seus dados aqui',
+    'Testar com Exemplo Pratico': 'Testar com Exemplo Prático',
+    'Limpar Area': 'Limpar Área',
+    'Configuracao de testes': 'Configuração de testes',
+    'Nenhum arquivo carregado ainda.': 'Nenhum arquivo carregado ainda.',
+    'A etapa DATASUS nao sera montada': 'A etapa DATASUS não será montada',
+    'Nao ha dados suficientes': 'Não há dados suficientes',
+    'Diferenca por unidade': 'Diferença por unidade',
+    'Diferenca': 'Diferença',
+    'diferenca': 'diferença',
+    'Periodos usados': 'Períodos usados',
+    'Comparacao pareada': 'Comparação pareada',
+    'comparacao pareada': 'comparação pareada',
+    'comparacao independente': 'comparação independente',
+    'grupos independentes': 'grupos independentes',
+    'Estatistica de teste t': 'Estatística de teste t',
+    'Conclusao ao nivel': 'Conclusão ao nível',
+    'nivel de significancia': 'nível de significância',
+    'Estatisticamente significativo': 'Estatisticamente significativo',
+    'Nao significativo': 'Não significativo',
+    'Diferenca media': 'Diferença média',
+    'Posto X': 'Posto X',
+    'Posto Y': 'Posto Y',
+    'Dif. postos': 'Dif. postos',
+    'Grafico principal': 'Gráfico principal',
+    'associacao monotona': 'associação monótona',
+    'Consistencia monotona': 'Consistência monótona',
+    'Medida de A': 'Medida de A',
+    'Medida de B': 'Medida de B',
+    'Opcoes': 'Opções',
+    'opcoes': 'opções',
+    'Concluido': 'Concluído',
+    'Analise': 'Análise',
+    'analise': 'análise',
+    'Estatisticas': 'Estatísticas',
+    'estatisticas': 'estatísticas',
+    'Variavel': 'Variável',
+    'variavel': 'variável',
+    'Metodo principal': 'Método principal',
+    'metodo principal': 'método principal',
+    'Metodos visuais': 'Métodos visuais',
+    'metodos visuais': 'métodos visuais',
+    'tabela colada': 'tabela colada',
+    'Arquivo selecionado': 'Arquivo selecionado',
+    'arquivo selecionado': 'arquivo selecionado',
+    'arquivos compativeis': 'arquivos compatíveis',
+    'dados compativeis': 'dados compatíveis',
+    'dados anomalos': 'dados anômalos',
+    'dados invalidos': 'dados inválidos',
+    'Valores maximos': 'Valores máximos',
+    'Valores minimos': 'Valores mínimos',
+    'Coeficiente': 'Coeficiente',
+    'coeficiente': 'coeficiente',
+    'Intervalo de confianca': 'Intervalo de confiança',
+    'intervalo de confianca': 'intervalo de confiança',
+    'Proporcao da variacao linear de Y explicada por X.': 'Proporção da variação linear de Y explicada por X.',
+    'Metodo por postos.': 'Método por postos.',
+    'Leitura de relacao linear.': 'Leitura de relação linear.',
+    'Leitura de associacao monotona por postos.': 'Leitura de associação monótona por postos.'
+};
+
+const baseDir = process.cwd();
+
+function walk(dir) {
+    let results = [];
+    const list = fs.readdirSync(dir);
+    list.forEach(file => {
+        if (file === 'node_modules' || file === '.git') return;
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        if (stat && stat.isDirectory()) {
+            results = results.concat(walk(filePath));
+        } else {
+            if (filePath.endsWith('.js') || filePath.endsWith('.html')) {
+                results.push(filePath);
+            }
+        }
+    });
+    return results;
+}
+
+const files = walk(baseDir);
+let changedFiles = 0;
+
+files.forEach(file => {
+    let content = fs.readFileSync(file, 'utf8');
+    const orig = content;
+
+    Object.keys(replacements).forEach(k => {
+        content = content.split(k).join(replacements[k]);
+    });
+
+    if (content !== orig) {
+        fs.writeFileSync(file, content, 'utf8');
+        console.log('Fixed:', file);
+        changedFiles++;
+    }
+});
+
+console.log('Completed! Fixed', changedFiles, 'files.');

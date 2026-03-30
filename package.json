@@ -1,0 +1,17 @@
+{
+  "name": "lacirstat-teste",
+  "version": "1.0.0",
+  "description": "Calculadora modular para capacitacao pratica em testes estatisticos",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.1"
+  }
+}
