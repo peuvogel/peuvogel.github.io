@@ -855,6 +855,78 @@ footer .sep{width:26px; height:1px; background:var(--border-card); margin:0 auto
     return svg(W,H,out.join(""));
   }
 
+  /* 100% stacked horizontal bars, floated away from the axis */
+  function hstack(s){
+    var W=400, PADT=14, PADB=s.xTitle?30:14, ROW=s.row||27;
+    var H=PADT+s.rows.length*ROW+PADB;
+    var LBL=s.labelW||30, GAP=s.gap||24, RGT=s.nW||48;
+    var x0=LBL+GAP, x1=W-RGT-8, bw=x1-x0;
+    var out=[], bh=s.bh||13;
+    s.rows.forEach(function(r,i){
+      var y=PADT+i*ROW, cy=y+ROW/2;
+      out.push(el("text",{x:LBL,y:(cy+4).toFixed(1),"text-anchor":"end","class":"grp"},esc(r.label)));
+      var left=x0;
+      r.segs.forEach(function(sg){
+        var w=sg.pct/100*bw;
+        if(w<=0) return;
+        out.push(el("rect",{x:left.toFixed(1),y:(cy-bh/2).toFixed(1),
+          width:w.toFixed(1),height:bh,fill:sg.color,
+          "data-t":esc(sg.label+", HEART "+r.label+": "+sg.n+" of "+r.total+" ("+sg.pct.toFixed(1)+"%)")}));
+        if(w>26) out.push(el("text",{x:(left+w/2).toFixed(1),y:(cy+3.5).toFixed(1),
+          "text-anchor":"middle","class":"val",fill:"#ffffff",
+          style:"font-size:9.5px"},sg.pct.toFixed(0)+"%"));
+        left+=w;
+      });
+      out.push(el("text",{x:(x1+8).toFixed(1),y:(cy+3.5).toFixed(1),"class":"val-2"},"n = "+r.total));
+    });
+    out.push(el("text",{x:9,y:(PADT+(H-PADT-PADB)/2).toFixed(1),"text-anchor":"middle","class":"ax-ttl",
+      transform:"rotate(-90 9 "+(PADT+(H-PADT-PADB)/2).toFixed(1)+")"},esc(s.yTitle)));
+    if(s.xTitle) out.push(el("text",{x:((x0+x1)/2).toFixed(1),y:(H-6).toFixed(1),
+      "text-anchor":"middle","class":"ax-ttl"},esc(s.xTitle)));
+    return svg(W,H,out.join(""));
+  }
+
+  /* GRACE distribution inside each HEART category */
+  function graceCat(s){
+    var W=400,H=s.h||330, L=44,R=10,T=24,B=46;
+    var pw=W-L-R, ph=H-T-B;
+    var Y=function(v){return T+ph-(v-s.yMin)/(s.yMax-s.yMin)*ph;};
+    var out=[];
+    niceTicks(s.yMin,s.yMax,5).forEach(function(t){
+      out.push(el("line",{x1:L,x2:W-R,y1:Y(t).toFixed(1),y2:Y(t).toFixed(1),"class":"gridline"}));
+      out.push(el("text",{x:L-7,y:(Y(t)+4).toFixed(1),"text-anchor":"end","class":"ax-lbl"},t));
+    });
+    out.push(el("line",{x1:L,x2:W-R,y1:(T+ph).toFixed(1),y2:(T+ph).toFixed(1),"class":"axisline"}));
+    var n=s.cats.length, slot=pw/n;
+    var means=[];
+    s.cats.forEach(function(c,ci){
+      var cx=L+slot*ci+slot/2, half=Math.min(slot*0.34,17), rd=rng(53+ci*13);
+      [["nocath",s.colors.nocath],["non",s.colors.non],["obs",s.colors.obs]].forEach(function(g){
+        (c[g[0]]||[]).forEach(function(v){
+          out.push(el("circle",{cx:(cx+(rd()*2-1)*half).toFixed(1),cy:Y(v).toFixed(1),
+            r:1.9,fill:g[1],"fill-opacity":.5,
+            "data-t":esc("HEART "+c.score+", GRACE "+v)}));
+        });
+      });
+      means.push([cx,Y(c.mean)]);
+      out.push(el("text",{x:cx.toFixed(1),y:(T+ph+15).toFixed(1),"text-anchor":"middle","class":"grp"},c.score));
+      out.push(el("text",{x:cx.toFixed(1),y:(T+ph+26).toFixed(1),"text-anchor":"middle","class":"val-2",
+        style:"font-size:9px"},c.n));
+    });
+    out.push(el("polyline",{points:means.map(function(m){return m[0].toFixed(1)+","+m[1].toFixed(1);}).join(" "),
+      fill:"none",stroke:"#1c1c1e","stroke-width":1.6,"stroke-linejoin":"round"}));
+    means.forEach(function(m,i){
+      out.push(el("circle",{cx:m[0].toFixed(1),cy:m[1].toFixed(1),r:3.1,fill:"#ffffff",
+        stroke:"#1c1c1e","stroke-width":1.6,
+        "data-t":esc("HEART "+s.cats[i].score+", mean GRACE "+s.cats[i].mean)}));
+    });
+    out.push(el("text",{x:(L+pw/2).toFixed(1),y:(H-4).toFixed(1),"text-anchor":"middle","class":"ax-ttl"},esc(s.xTitle)));
+    out.push(el("text",{x:9,y:(T+ph/2).toFixed(1),"text-anchor":"middle","class":"ax-ttl",
+      transform:"rotate(-90 9 "+(T+ph/2).toFixed(1)+")"},esc(s.yTitle)));
+    if(s.note) out.push(el("text",{x:(L+pw/2).toFixed(1),y:12,"text-anchor":"middle","class":"pv"},esc(s.note)));
+    return svg(W,H,out.join(""));
+  }
+
   /* full pie, ApexCharts light styling: white dividers, labels inside */
   function pie(s){
     var W=400,H=300, cx=200, cy=150, R=126;
@@ -884,7 +956,8 @@ footer .sep{width:26px; height:1px; background:var(--border-card); margin:0 auto
     return svg(W,H,out.join(""));
   }
 
-  var RENDER={strip:stripPlot,meansd:meanSD,hbars:hbars,hist:histogram,pie:pie,scatterxy:scatterXY};
+  var RENDER={strip:stripPlot,meansd:meanSD,hbars:hbars,hist:histogram,pie:pie,
+              scatterxy:scatterXY,hstack:hstack,gracecat:graceCat};
 
   /* ============================ ZOOM / PAN ============================ */
   function makeZoomable(fig){
